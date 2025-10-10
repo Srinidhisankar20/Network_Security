@@ -1,8 +1,7 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from NetworkSecurity.logging import logger
+#sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from NetworkSecurity.logging.logger import logging
 class NetworkSecurityException(Exception):
     def __init__(self,error_message,error_details:sys):
         self.error_message = error_message
@@ -17,7 +16,7 @@ class NetworkSecurityException(Exception):
         
 if __name__=='__main__':
     try:
-        logger.logging.INFO("Enter the try block")
+        #logger.logging.INFO("Enter the try block")
         a=1/0
         print("This will not be printed",a)
     except Exception as e:

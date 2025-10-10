@@ -3,3 +3,7 @@ pandas
 numpy
 pymongo
 certifi
+pymongo
+scikit-learn
+dill
+pyaml

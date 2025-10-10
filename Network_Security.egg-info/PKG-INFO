@@ -9,6 +9,10 @@ Requires-Dist: pandas
 Requires-Dist: numpy
 Requires-Dist: pymongo
 Requires-Dist: certifi
+Requires-Dist: pymongo
+Requires-Dist: scikit-learn
+Requires-Dist: dill
+Requires-Dist: pyaml
 Dynamic: author
 Dynamic: author-email
 Dynamic: license-file
