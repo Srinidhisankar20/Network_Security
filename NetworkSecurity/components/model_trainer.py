@@ -19,9 +19,14 @@ from sklearn.ensemble import (
     RandomForestClassifier,
 )
 import mlflow
+from dotenv import load_dotenv
 from urllib.parse import urlparse
 import dagshub
+load_dotenv()
 dagshub.init(repo_owner='srinidhisankar21', repo_name='Network_Security', mlflow=True)
+os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/srinidhisankar21/Network_Security.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"] = "srinidhisankar21"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "d2d4398107445e4d305af6da959ee08026f0897d"
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -40,7 +45,9 @@ class ModelTrainer:
             mlflow.log_metric("f1_score",f1_Score)
             mlflow.log_metric("Precision",precision_score)
             mlflow.log_metric("Recall",recall_score)
-            mlflow.sklearn.log_model(sk_model=best_model, name="best_model")
+            mlflow.sklearn.log_model(sk_model=best_model, artifact_path="model")
+
+
 
 
 
@@ -64,15 +71,15 @@ class ModelTrainer:
                 # 'criterion':['gini', 'entropy', 'log_loss'],
                 
                 # 'max_features':['sqrt','log2',None],
-                'n_estimators': [8,16,32,128,256]
+                'n_estimators': [8,16,128,256]
             },
             "Gradient Boosting":{
                 # 'loss':['log_loss', 'exponential'],
-                'learning_rate':[.1,.01,.05,.001],
+                'learning_rate':[.1,.01,.001],
                 'subsample':[0.6,0.7,0.75,0.85,0.9],
                 # 'criterion':['squared_error', 'friedman_mse'],
                 # 'max_features':['auto','sqrt','log2'],
-                'n_estimators': [8,16,32,64,128,256]
+                'n_estimators': [8,16,64,128,256]
             },
             "Logistic Regression":{},
             "AdaBoost":{
@@ -112,7 +119,9 @@ class ModelTrainer:
         os.makedirs(model_dir_path,exist_ok=True)
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
-        save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
+        save_object(self.model_trainer_config.trained_model_file_path, obj=Network_Model)
+
+
         #model pusher
         save_object("final_model/model.pkl",best_model)
         
