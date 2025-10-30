@@ -14,6 +14,9 @@ from uvicorn import run as app_run
 from fastapi.responses import Response
 from starlette.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
+
+
+from fastapi import BackgroundTasks
 import pandas as pd
 from dotenv import load_dotenv
 
@@ -53,6 +56,8 @@ async def train_route():
     except Exception as e:
         raise NetworkSecurityException(e,sys)
     
+
+    
 @app.post("/predict")
 async def predict_route(request: Request,file: UploadFile = File(...)):
     try:
@@ -78,5 +83,4 @@ async def predict_route(request: Request,file: UploadFile = File(...)):
 
     
 if __name__=="__main__":
-    app_run(app,host=localhost,port=8000)
-
+    app_run(app,host='localhost',port=8000)
